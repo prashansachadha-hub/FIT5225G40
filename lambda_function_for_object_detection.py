@@ -35,7 +35,7 @@ def lambda_handler(event, context):
         
         # Generate URLs for both standard and thumbnail images
         standard_image_url = f"https://{bucket}.s3.amazonaws.com/{decoded_key}"
-        thumbnail_image_key = f"{RESIZED_FOLDER}/{username}/{image_name}"
+        thumbnail_image_key = f"{RESIZED_FOLDER}{username}/{image_name}"
         thumbnail_image_url = f"https://{bucket}.s3.amazonaws.com/{thumbnail_image_key}"
         
         img_table.put_item(
@@ -63,9 +63,9 @@ def lambda_handler(event, context):
                     ConditionExpression='attribute_not_exists(tagName)'  # Ensures unique tags
                 )
                 print(f"Inserted tag: {tag}")
-            except boto3.dynamodb.conditions.ConditionalCheckFailedException:
+            except Exception as e:
                 # Tag already exists, skip insertion
-                print(f"Tag already exists: {tag}")
+                print(f"Tag already exists or another error occurred: {tag} - {str(e)}")
                 
             # Insert relationship into mid_table
             mid_table.put_item(
