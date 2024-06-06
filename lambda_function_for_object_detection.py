@@ -51,6 +51,7 @@ def lambda_handler(event, context):
         image = s3_client.get_object(Bucket=bucket, Key=key)
         tags = od.detect_image_bytes(image["Body"].read())
         grouped_tags = group_tags(tags)
+        print(f"tags detected: {grouped_tags}")
         
         # Insert unique tags into tag_table and relationships into mid_table
         for tag, count in grouped_tags.items():

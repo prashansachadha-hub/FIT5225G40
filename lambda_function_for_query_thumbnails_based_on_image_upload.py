@@ -4,13 +4,6 @@ import boto3
 import object_detection_v2 as od
 from boto3.dynamodb.conditions import Attr
 
-# Define folder paths and S3 bucket name
-STANDARD_FOLDER = "standard_images/"
-RESIZED_FOLDER = 'resized_images/'
-s3_client = boto3.client('s3')
-S3_BUCKET = "fit5225-gp40-photos"
-THUMBNAIL_WIDTH = 100
-
 dynamodb = boto3.resource('dynamodb')
 mid_table = dynamodb.Table("imageTagMiddleTable")
 img_table = dynamodb.Table("imagesTable")
@@ -22,7 +15,10 @@ def lambda_handler(event, context):
     
     # Decode and process the image
     image_data = decode_base64_image(image_base64)
+    
     tags = od.detect_image_bytes(image_data)
+    print("Detected tags:", tags)
+    
     grouped_tags = group_tags(tags)
     image_ids = find_images_by_tags(grouped_tags)
     
