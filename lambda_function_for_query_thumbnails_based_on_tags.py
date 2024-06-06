@@ -19,16 +19,16 @@ def lambda_handler(event, context):
             'body': json.dumps({'message': 'No images found matching the criteria'})
         }
     
-    # Retrieve image details from img_table
-    images = []
+    # Retrieve thumbnail images from img_table
+    thumbnail_images = []
     for image_id in image_ids:
         response = img_table.get_item(Key={'imageID': image_id})
         if 'Item' in response:
-            images.append(response['Item'])
+            thumbnail_images.append(response['Item']['thumbnailImageUrl'])
     
     return {
         'statusCode': 200,
-        'body': json.dumps(images)
+        'body': json.dumps(thumbnail_images)
     }
 
 def find_images_by_tags(required_tags):
