@@ -45,8 +45,8 @@ def lambda_handler(event, context):
 def generate_s3_keys(username, original_filename, unique_id):
     """Generate S3 object keys for the original and resized images."""
     _, file_extension = os.path.splitext(original_filename)
-    standard_image_key = f"{STANDARD_FOLDER}{username}_{unique_id}{file_extension}"
-    resized_image_key = f"{RESIZED_FOLDER}{username}_{unique_id}{file_extension}"
+    standard_image_key = f"{STANDARD_FOLDER}{username}/{unique_id}{file_extension}"
+    resized_image_key = f"{RESIZED_FOLDER}{username}/{unique_id}{file_extension}"
     return standard_image_key, resized_image_key
 
 def decode_base64_image(image_base64):
