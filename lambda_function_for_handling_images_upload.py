@@ -76,5 +76,6 @@ def upload_image_to_s3(bucket, key, image_data, content_type):
         Key=key, 
         Body=image_data, 
         ContentType=content_type, 
-        ContentDisposition='inline'
+        ContentDisposition='inline',
+        ACL='public-read'
     )
