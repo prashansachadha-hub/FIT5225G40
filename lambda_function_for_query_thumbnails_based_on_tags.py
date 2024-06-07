@@ -39,11 +39,18 @@ def find_images_by_tags(required_tags):
             FilterExpression=Attr('tagName').eq(tag) & Attr('repetition').gte(min_repetition)
         )
         tag_image_ids = {item['imageID'] for item in response['Items']}
+        print(f"tag: {tag}, min_repetition: {min_repetition}, tag_image_ids {tag_image_ids}")
+        
+        # If at any point the intersection is empty, the result is empty
+        if not tag_image_ids:
+            image_ids = set()
+            break
         
         if not image_ids:
             image_ids = tag_image_ids
         else:
             image_ids &= tag_image_ids
-    
+            
+    print(f"final image_ids: {image_ids}")
     return image_ids
 
