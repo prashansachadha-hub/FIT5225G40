@@ -8,8 +8,8 @@
 <body>
     <header>
         <h1>PixTag</h1>
-        <button id="sign-in-button" style="display:none;">Sign In</button>
-        <button id="sign-out-button" style="display:none;">Sign Out</button>
+        <button id="sign-in-button" class="auth-button">Sign In</button>
+        <button id="sign-out-button" class="auth-button">Sign Out</button>
     </header>
 
     <div class="container" id="upload-container" style="display:none;">
@@ -72,6 +72,7 @@
                 statusElement.innerText = 'No file selected for upload.';
             }
         }
+
 
         function submitQuery() {
             var messageElement = document.getElementById('morning-message');
