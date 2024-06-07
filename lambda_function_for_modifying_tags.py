@@ -76,13 +76,30 @@ def add_tags(image_id, tags):
 def remove_tags(image_id, tags):
     for tag in tags:
         try:
-            # Remove the relationship from mid_table
-            mid_table.delete_item(
+            # Decrement the count by 1
+            response = mid_table.update_item(
                 Key={
                     'imageID': image_id,
                     'tagName': tag
-                }
+                },
+                UpdateExpression="set repetition = repetition - :dec",
+                ConditionExpression="repetition > :zero",
+                ExpressionAttributeValues={
+                    ':dec': 1,
+                    ':zero': 0
+                },
+                ReturnValues="UPDATED_NEW"
             )
-            print(f"Removed link between imageID: {image_id} and tag: {tag}")
+            # If the count reaches 0, remove the record
+            if response['Attributes']['repetition'] <= 0:
+                mid_table.delete_item(
+                    Key={
+                        'imageID': image_id,
+                        'tagName': tag
+                    }
+                )
+                print(f"Removed link between imageID: {image_id} and tag: {tag} because count reached 0")
+            else:
+                print(f"Decremented repetition for imageID: {image_id} and tag: {tag}")
         except Exception as e:
-            print(f"Error removing link: {image_id} - {tag} - {str(e)}")
+            print(f"Error decrementing link: {image_id} - {tag} - {str(e)}")
