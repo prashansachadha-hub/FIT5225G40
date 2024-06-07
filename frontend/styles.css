@@ -1,30 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<body>
-    <header>
-        <h1>PixTag</h1>
-    </header>
-    <div class="container">
-        <h2>Upload Image</h2>
-        <div class="form-group">
-            <label for="image-upload">Choose an image:</label>
-            <input type="file" id="image-upload">
-        </div>
-        <button onclick="uploadImage()">Upload</button>
-        <p id="upload-status"></p>
-    </div>
-    <div class="container">
-        <h2>Submit Query</h2>
-        <div class="form-group">
-            <label for="tags-input">Enter tags (comma-separated):</label>
-            <input type="text" id="tags-input" placeholder="e.g. person, car, cat">
-        </div>
-        <button onclick="submitQuery()">Search</button>
-        <div class="results" id="query-results"></div>
-    </div>
-    
-    <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -78,8 +52,3 @@
             max-width: 100px;
             margin: 0.5rem;
         }
-    </style>
-    
-</body>
-
-</html>
